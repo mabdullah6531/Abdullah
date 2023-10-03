@@ -1,0 +1,29 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    
+    {% if message %}
+        {{message}}
+    {% else %}
+    {% endif %}
+    <h2>Active Listings</h2>
+        {% for item in data %}
+    <a href="{% url 'listings' item.id %}">
+    <div class="segment-container">
+        <div style="flex: 1;
+        background-color: #2e1313;
+        color: #d8adad;
+        padding: 10px;
+        text-align: left;
+        border: 1px solid #000;
+        border-radius: 8px;
+        box-sizing: border-box;
+        margin-top: 10px;">Title: {{ item.title }}<br>
+        <img src="{{ item.image }}" alt="{{ item.title }}" height="200" width="300"><br>
+        Description: {{ item.description }}<br>
+        <b>Bid: {{ item.bid.price }}</b><br> Category: {{ item.category }}<br>
+    </div></a>
+        {% endfor %}
+        
+    
+{% endblock %}

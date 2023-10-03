@@ -1,0 +1,22 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<h2>Watch List</h2>
+    {% for item in watchlist_items %}
+        <a href="{% url 'listings' item.yourmodel.id %}">
+        <div class="segment-container">
+            <div style="flex: 1;
+            background-color: #2e1313;
+            color: #d8adad;
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #000;
+            border-radius: 8px;
+            box-sizing: border-box;
+            margin-top: 10px;">Title: {{ item.yourmodel.title }}<br>
+            <img src="{{ item.yourmodel.image }}" alt="{{ item.yourmodel.title }}" height="200" width="300"><br>
+            Description: {{ item.yourmodel.description }}<br>
+            <b>Bid: {{ item.yourmodel.bid.price }}</b><br> Category: {{ item.yourmodel.category }}<br>
+        </div></a>
+    {% endfor %}
+{% endblock body %}

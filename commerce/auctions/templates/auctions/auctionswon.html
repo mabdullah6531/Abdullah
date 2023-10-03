@@ -1,0 +1,14 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<h3>Auctions Won</h3>
+    {% for items in won %}
+    {% if items.bid.highest_bidder == request.user %}
+        <b>{{items.title}}</b><br>
+        <img src="{{ items.image }}" alt="{{ items.title }}" width="500"><br>
+        <b>Bid: {{items.bid.price}}</b><br>
+    {% else %}
+    {% endif %}
+        
+    {% endfor %}
+{% endblock body %}

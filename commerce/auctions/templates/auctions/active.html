@@ -1,0 +1,59 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <div style="flex: 1;
+    background-color: #2e1313;
+    color: #d8adad;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #000;
+    border-radius: 8px;
+    box-sizing: border-box;
+    margin-top: 10px;">
+    Title: {{ data.title }}<br>
+    <img src="{{ data.image }}" alt="{{ data.title }}" width="500"><br>
+    <b>Highest Bid: {{ data.bid.price }}</b><br>
+    Starting Bid: {{data.bid.starting_bid}}<br> 
+    Category: {{ data.category }}<br> 
+    Description: {{ data.description }}<br><br>
+    
+    {% if authen == "1" %}
+    <div class="button-container" style="display: inline-block;">
+        {% if exist == False %}
+            <form action="{% url 'watchlist' data.id %}" id="for_watchlist" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Add to Watchlist">
+            </form>
+        {% elif exist == True %}
+            <form action="{% url 'remove' data.id %}" id="for_watchlist" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Remove from Watchlist">
+            </form>
+        {% endif %}
+    </div>
+    <div class="button-container" style="display: inline-block;">
+        {% if candelete %}
+            <form action="{% url 'delete' data.id %}" id="candelete" method = "post">
+                {% csrf_token %}
+                <input type="submit" form="candelete" value="Close Listing">
+            </form>
+        {% endif %}
+    </div>
+        <br><br><form action="{% url 'bid' data.id %}" method="post" id="for_bid">
+            {% csrf_token %}
+            <input type="number" name="new_bid" placeholder="Bid">
+            <input type="submit" form="for_bid" value="Make Bid"><br>
+        </form>
+        <form action="{% url 'comment' data.id %}" method="post" id="for_comment">
+            {% csrf_token %}
+            <input type="text" name="comment" maxlength="255" placeholder="Add Comment">
+            <input type="submit" form="for_comment" value="Add Comment">
+        </form>
+    {% else %}
+    {% endif %}
+    <!-- <b>Comments</b><br> -->
+    {% for comment in comments_obj %}
+        <b>{{comment.user.username}}</b>: {{comment.message}}<br>
+    {% endfor %}
+</div>
+{% endblock body %}
